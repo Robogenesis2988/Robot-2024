@@ -29,13 +29,11 @@ class SixWheelDrivetrain:
 
         # create motor controller objects
         self.leftFront = leftFront
-        self.leftMiddle = leftMiddle
         self.leftBack = leftBack
-        self.leftMotorGroup = wpilib.MotorControllerGroup(self.leftFront,self.leftMiddle,self.leftBack)
+        self.leftMotorGroup = wpilib.MotorControllerGroup(self.leftFront,self.leftBack)
         self.rightFront = rightFront
-        self.rightMiddle = rightMiddle
         self.rightBack = rightBack
-        self.rightMotorGroup = wpilib.MotorControllerGroup(self.rightFront, self.rightMiddle, self.rightBack)
+        self.rightMotorGroup = wpilib.MotorControllerGroup(self.rightFront, self.rightBack)
         
 
         # object that handles basic drive operations
@@ -74,18 +72,16 @@ class SixWheelDrivetrain:
     
     def rightInverted(self,isInverted: bool) -> None:
         self.leftFront.setInverted(isInverted)
-        self.leftMiddle.setInverted(isInverted)
         self.leftBack.setInverted(isInverted)
 
     def leftInverted(self, isInverted: bool) -> None:
         self.rightFront.setInverted(isInverted)
-        self.rightMiddle.setInverted(isInverted)
         self.rightBack.setInverted(isInverted)
 
 class DifferentialDrive(SixWheelDrivetrain):
 
     def __init__(self,leftFront: wpilib.interfaces.MotorController, leftMiddle: wpilib.interfaces.MotorController, leftBack: wpilib.interfaces.MotorController, rightFront: wpilib.interfaces.MotorController, rightMiddle: wpilib.interfaces.MotorController, rightBack: wpilib.interfaces.MotorController):
-        super().__init__(leftFront, leftMiddle, leftBack, rightFront, rightMiddle, rightBack)
+        super().__init__(leftFront, leftBack, rightFront, rightBack)
         self.DifferentialDrive = wpilib.drive.DifferentialDrive(
             self.leftMotorGroup, self.rightMotorGroup
         )
