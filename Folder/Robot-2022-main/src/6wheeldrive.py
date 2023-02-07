@@ -39,8 +39,8 @@ class SixWheelDrivetrain:
         
 
         # object that handles basic drive operations
-        self.myRobot = wpilib.drive.DifferentialDrive(self.leftMotorGroup, self.rightMotorGroup)
-        self.myRobot.setExpiration(0.1)
+        #self.myRobot = wpilib.drive.DifferentialDrive(self.leftMotorGroup, self.rightMotorGroup)
+        #self.myRobot.setExpiration(0.1)
 
         # joystick #0
         self.stick = wpilib.Joystick(0)
