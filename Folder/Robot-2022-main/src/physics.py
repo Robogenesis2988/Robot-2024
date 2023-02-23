@@ -33,7 +33,8 @@ class PhysicsEngine:
         # Gyro
         self.gyro = wpilib.simulation.AnalogGyroSim(1)
 
-        self.drivetrain = drivetrains.MecanumDrivetrain()
+        #self.drivetrain = drivetrains.MecanumDrivetrain()
+        self.drivetrain = drivetrains.FourMotorDrivetrain()
 
     def update_sim(self, now, tm_diff):
         """

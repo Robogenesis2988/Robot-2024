@@ -1,13 +1,13 @@
 class MotorPorts():
     # Drivetrain motors
     LEFT_FRONT = 1
-    LEFT_REAR = 3
-    RIGHT_FRONT = 0
-    RIGHT_REAR = 2
+    LEFT_REAR = 2
+    RIGHT_FRONT = 3
+    RIGHT_REAR = 4
 
     # Winch motors
-    LEFT_WINCH = 5
-    RIGHT_WINCH = 4
+    LEFT_WINCH = 7
+    RIGHT_WINCH = 6
 
 
 class PneumaticPorts():

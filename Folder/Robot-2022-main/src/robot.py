@@ -13,6 +13,7 @@ import pneumatics
 import autonomous
 import winch
 import ports
+import sixwheeldrive
 from vision import cameraLaunch
 import ports
 
@@ -39,9 +40,9 @@ class Robot(wpilib.TimedRobot):
             *ports.PneumaticPorts.CLIMB2)
 
         self.leftFront = wpilib.Talon(ports.MotorPorts.LEFT_FRONT)
-        self.leftRear = wpilib.Talon(ports.MotorPorts.LEFT_REAR)
+        self.leftBack = wpilib.Talon(ports.MotorPorts.LEFT_REAR)
         self.rightFront = wpilib.Talon(ports.MotorPorts.RIGHT_FRONT)
-        self.rightRear = wpilib.Talon(ports.MotorPorts.RIGHT_REAR)
+        self.rightBack = wpilib.Talon(ports.MotorPorts.RIGHT_REAR)
 
         self.leftWinchMotor = wpilib.Talon(ports.MotorPorts.LEFT_WINCH)
         self.rightWinchMotor = wpilib.Spark(ports.MotorPorts.RIGHT_WINCH)
@@ -52,9 +53,13 @@ class Robot(wpilib.TimedRobot):
 
         # self.drive = wpilib.drive.MecanumDrive(self.leftFront, self.leftRear, self.rightFront, self.rightRear)
 
-        self.drivetrain = drivetrain.MecanumDrive(
-            self.leftFront, self.leftRear, self.rightFront, self.rightRear)
-        self.drivetrain.rightInverted(True)
+        self.drivetrain = sixwheeldrive.DifferentialDrive(
+            self.leftFront, self.leftBack, self.rightFront, self.rightBack)
+        #self.drivetrain.frontRightInverted(True)
+        #self.drivetrain.backRightInverted(True)
+        #self.drivetrain.frontLeftInverted(False)
+        #self.drivetrain.backLeftInverted(False)
+        self.drivetrain.leftInverted(False)
         self.drivetrain.setDeadzone(0.5, 0.5)
         self.drivetrain.speedMultiplier = 0.75
         self.drivetrain.twistMultiplier = 0.75
@@ -116,12 +121,12 @@ class Robot(wpilib.TimedRobot):
         # self.drivetrain.motorTest(self.timer)
 
         # Toggle pistons on button 3
-        if self.stick.getRawButtonPressed(ports.JoystickButtons.DUMPTOGGLE):
-            self.solenoidDump.toggle()
+        #if self.stick.getRawButtonPressed(ports.JoystickButtons.DUMPTOGGLE):
+            #self.solenoidDump.toggle()
 
-        if self.stick.getRawButtonPressed(ports.JoystickButtons.CLIMBPISTONTOGGLE):
-            self.solenoidClimb1.toggle()
-            self.solenoidClimb2.toggle()
+        #if self.stick.getRawButtonPressed(ports.JoystickButtons.CLIMBPISTONTOGGLE):
+            #self.solenoidClimb1.toggle()
+            #self.solenoidClimb2.toggle()
 
         # Toggle speed multiplier on button 2
         if self.stick.getRawButtonPressed(ports.JoystickButtons.SPEEDMULTIPLIER):
@@ -145,20 +150,24 @@ class Robot(wpilib.TimedRobot):
             # self.leftWinchMotor.set(0.1)
             # self.solenoidDump.open()
             # self.rightWinchMotor.set(-0.1)
-        if self.stick.getRawButton(7):
-            self.leftWinch.winchExtend()
-        elif self.stick.getRawButton(9):
-            self.leftWinch.winchRetract()
-        else:
-            self.leftWinch.winchStop()
 
-        if self.stick.getRawButton(8):
-            self.rightWinch.winchExtend()
-        elif self.stick.getRawButton(10):
-            self.rightWinch.winchRetract()
-        else:
-            self.rightWinch.winchStop()
+
+        #if self.stick.getRawButton(7):
+            #self.leftWinch.winchExtend()
+        #elif self.stick.getRawButton(9):
+            #self.leftWinch.winchRetract()
+        #else:
+            #self.leftWinch.winchStop()
+
+        #if self.stick.getRawButton(8):
+            #self.rightWinch.winchExtend()
+        #elif self.stick.getRawButton(10):
+            #self.rightWinch.winchRetract()
+        #else:
+            #self.rightWinch.winchStop()
             # self.rightWinch.winchStop()
+
+
             # self.leftWinchMotor.set(0)
             # self.rightWinchMotor.set(0)
 
