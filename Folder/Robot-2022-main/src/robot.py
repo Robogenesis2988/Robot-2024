@@ -54,13 +54,16 @@ class Robot(wpilib.TimedRobot):
 
         self.drivetrain = drivetrain.MecanumDrive(
             self.leftFront, self.leftRear, self.rightFront, self.rightRear)
-        self.drivetrain.rightInverted(True)
+        self.drivetrain.rightInverted(False)
+        self.drivetrain.leftInverted(True)
         self.drivetrain.setDeadzone(0.5, 0.5)
         self.drivetrain.speedMultiplier = 0.75
         self.drivetrain.twistMultiplier = 0.75
 
         # self.rightFront.setInverted(True)
         # self.rightRear.setInverted(True)
+        # self.leftFront.setInverted(True)
+        # self.leftRear.setInverted(True) I would keep this commented out unless it drives in the wrong direction then you can revise.
 
         self.stick = wpilib.Joystick(ports.JoystickPorts.JOY)
 
