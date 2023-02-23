@@ -22,10 +22,10 @@ class PhysicsEngine:
         self.physics_controller = physics_controller
 
         # Motors
-        self.lf_motor = wpilib.simulation.PWMSim(0)
-        self.lr_motor = wpilib.simulation.PWMSim(1)
-        self.rf_motor = wpilib.simulation.PWMSim(2)
-        self.rr_motor = wpilib.simulation.PWMSim(3)
+        self.lf_motor = wpilib.simulation.PWMSim(1)
+        self.lr_motor = wpilib.simulation.PWMSim(3)
+        self.rf_motor = wpilib.simulation.PWMSim(0)
+        self.rr_motor = wpilib.simulation.PWMSim(2)
 
         self.lwinch = wpilib.simulation.PWMSim(4)
         self.rwinch = wpilib.simulation.PWMSim(5)
