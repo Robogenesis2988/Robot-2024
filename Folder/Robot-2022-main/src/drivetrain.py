@@ -111,4 +111,4 @@ class MecanumDrive(DriveTrain):
             self.leftFront, self.leftRear, self.rightFront, self.rightRear)  # create a mecanum drive object
 
     def moveRobot(self, speed: float, direction: float, twist: float):
-        self.MecanumDrive.drivePolar(speed, direction, twist)
+        self.MecanumDrive.drivePolar(speed, -direction, -twist)
