@@ -18,8 +18,8 @@ class DeadzoneMode(Enum):
 
 
 class DriveTrain:
-    deadzone: float = 0
-    deadzone_twist: float = 0
+    deadzone: float = .25
+    deadzone_twist: float = .25
     deadzone_mode: DeadzoneMode = DeadzoneMode.CUTOFF
     speedMultiplier: float = 1
     twistMultiplier: float = 1
