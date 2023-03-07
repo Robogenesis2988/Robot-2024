@@ -31,6 +31,9 @@ class DriveTrain:
         self.rightFront = rightFront
         self.rightRear = rightRear
         self.stick = wpilib.Joystick(0)
+        self.realX = 0
+        self.realY = 0
+        self.realZ = 0
 
     def constrainJoystick(self, Joystick: wpilib.Joystick):
         """
@@ -105,6 +108,8 @@ class DriveTrain:
             self.leftFront.set(speed)
 
 
+
+
 class MecanumDrive(DriveTrain):
     def __init__(self, leftFront: wpilib.interfaces.MotorController, leftRear: wpilib.interfaces.MotorController, rightFront: wpilib.interfaces.MotorController, rightRear: wpilib.interfaces.MotorController) -> None:
         # run the parent's __init__ function
@@ -113,4 +118,21 @@ class MecanumDrive(DriveTrain):
             self.leftFront, self.leftRear, self.rightFront, self.rightRear)  # create a mecanum drive object
 
     def moveRobot(self, speed: float, direction: float, twist: float):
-        self.MecanumDrive.driveCartesian(self.stick.getY(), -self.stick.getX(), -self.stick.getZ())
+        self.stickInputY = self.stick.getY()
+        self.stickInputX = self.stick.getX()
+        self.stickInputZ = self.stick.getZ()
+
+        if (abs(self.stickInputY) < 0.1):
+            self.realY = 0
+        else:
+            self.realY = self.stickInputY
+        if (abs(self.stickInputX) < 0.1):
+            self.realX = 0
+        else:
+            self.realX = self.stickInputX
+        if (abs(self.stickInputZ) < 0.1):
+            self.realZ = 0
+        else: 
+            self.realZ = self.stickInputZ
+
+        self.MecanumDrive.driveCartesian(self.realY, self.realX, self.realZ)
