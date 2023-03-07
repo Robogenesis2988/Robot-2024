@@ -23,12 +23,14 @@ class DriveTrain:
     deadzone_mode: DeadzoneMode = DeadzoneMode.CUTOFF
     speedMultiplier: float = 1
     twistMultiplier: float = 1
+    
 
     def __init__(self, leftFront: wpilib.interfaces.MotorController, leftRear: wpilib.interfaces.MotorController, rightFront: wpilib.interfaces.MotorController, rightRear: wpilib.interfaces.MotorController) -> None:
         self.leftFront = leftFront
         self.leftRear = leftRear
         self.rightFront = rightFront
         self.rightRear = rightRear
+        self.stick = wpilib.Joystick(0)
 
     def constrainJoystick(self, Joystick: wpilib.Joystick):
         """
@@ -111,4 +113,4 @@ class MecanumDrive(DriveTrain):
             self.leftFront, self.leftRear, self.rightFront, self.rightRear)  # create a mecanum drive object
 
     def moveRobot(self, speed: float, direction: float, twist: float):
-        self.MecanumDrive.drivePolar(speed, -direction, -twist)
+        self.MecanumDrive.driveCartesian(self.stick.getY(), -self.stick.getX(), -self.stick.getZ())
