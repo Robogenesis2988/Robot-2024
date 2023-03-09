@@ -1,59 +1,55 @@
 {
-  "Docking": {
-    "Data": []
-  },
   "MainWindow": {
     "GLOBAL": {
-      "fps": "120",
-      "height": "1001",
-      "maximized": "1",
+      "height": "1050",
+      "maximized": "0",
       "style": "0",
       "userScale": "2",
       "width": "1920",
-      "xpos": "0",
-      "ypos": "29"
+      "xpos": "-76",
+      "ypos": "117"
     }
   },
   "Window": {
     "###/SmartDashboard/Field": {
       "Collapsed": "0",
-      "Pos": "463,121",
-      "Size": "525,335"
+      "Pos": "300,300",
+      "Size": "600,300"
     },
     "###FMS": {
       "Collapsed": "0",
-      "Pos": "6,675",
-      "Size": "336,164"
+      "Pos": "7,810",
+      "Size": "326,211"
     },
     "###Joysticks": {
       "Collapsed": "0",
-      "Pos": "312,581",
-      "Size": "976,212"
+      "Pos": "375,697",
+      "Size": "1156,241"
     },
     "###Other Devices": {
       "Collapsed": "0",
-      "Pos": "1281,25",
-      "Size": "312,868"
+      "Pos": "1537,30",
+      "Size": "375,1042"
     },
     "###PWM Outputs": {
       "Collapsed": "0",
-      "Pos": "1137,25",
-      "Size": "131,210"
+      "Pos": "1365,30",
+      "Size": "151,99"
     },
     "###Solenoids": {
       "Collapsed": "0",
-      "Pos": "362,25",
-      "Size": "201,60"
+      "Pos": "435,30",
+      "Size": "126,60"
     },
     "###System Joysticks": {
       "Collapsed": "0",
-      "Pos": "6,437",
-      "Size": "232,254"
+      "Pos": "7,525",
+      "Size": "273,290"
     },
     "###Timing": {
       "Collapsed": "0",
-      "Pos": "6,187",
-      "Size": "162,142"
+      "Pos": "7,225",
+      "Size": "188,157"
     },
     "Debug##Default": {
       "Collapsed": "0",
@@ -63,7 +59,7 @@
     "Robot State": {
       "Collapsed": "0",
       "Pos": "5,20",
-      "Size": "109,114"
+      "Size": "126,129"
     }
   }
 }

@@ -24,18 +24,18 @@ class SixWheelDrivetrain:
     speedMultiplier: float = 1
     twistMultiplier: float = 1
 
-    def __init__(self, leftFront: wpilib.interfaces.MotorController, leftBack: wpilib.interfaces.MotorController, rightFront: wpilib.interfaces.MotorController, rightBack: wpilib.interfaces.MotorController):
+    def __init__(self, leftMotors: wpilib.interfaces.MotorController, leftBack: wpilib.interfaces.MotorController, rightMotors: wpilib.interfaces.MotorController, rightBack: wpilib.interfaces.MotorController):
         """Robot initialization function"""
 
         # create motor controller objects
-        self.leftFront = leftFront
-        self.leftBack = leftBack
-        self.leftMotorGroup = wpilib.MotorControllerGroup(
-            self.leftFront, self.leftBack)
-        self.rightFront = rightFront
-        self.rightBack = rightBack
-        self.rightMotorGroup = wpilib.MotorControllerGroup(
-            self.rightFront, self.rightBack)
+        self.leftMotors = leftMotors
+        #self.leftBack = leftBack
+        #self.leftMotorGroup = wpilib.MotorControllerGroup(
+        #    self.leftFront, self.leftBack)
+        self.rightMotors = rightMotors
+        #self.rightBack = rightBack
+        #self.rightMotorGroup = wpilib.MotorControllerGroup(
+        #    self.rightFront, self.rightBack)
 
         # object that handles basic drive operations
         #self.myRobot = wpilib.drive.DifferentialDrive(self.leftMotorGroup, self.rightMotorGroup)
@@ -90,12 +90,12 @@ class SixWheelDrivetrain:
 
 class DifferentialDrive(SixWheelDrivetrain):
 
-    def __init__(self, leftFront: wpilib.interfaces.MotorController, leftBack: wpilib.interfaces.MotorController, rightFront: wpilib.interfaces.MotorController, rightBack: wpilib.interfaces.MotorController):
-        super().__init__(leftFront, leftBack, rightFront, rightBack)
+    def __init__(self, leftMotors: wpilib.interfaces.MotorController, rightMotors: wpilib.interfaces.MotorController):#, rightFront: wpilib.interfaces.MotorController, rightBack: wpilib.interfaces.MotorController):
+        super().__init__(self,leftMotors, self,rightMotors)
         self.DifferentialDrive = wpilib.drive.DifferentialDrive(
-            self.leftMotorGroup, self.rightMotorGroup
+            self.leftMotors, self.rightMotors
         )
         """Runs the motors with tank steering"""
 
     def moveRobot(self, speed: float, direction: float, twist: float):
-        self.DifferentialDrive.arcadeDrive(speed, twist)
+        self.DifferentialDrive.arcadeDrive(self.stick.getRawAxis(0), self.stick.getRawAxis(1))
