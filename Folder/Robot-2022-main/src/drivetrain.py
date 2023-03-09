@@ -122,17 +122,17 @@ class MecanumDrive(DriveTrain):
         self.stickInputX = self.stick.getX()
         self.stickInputZ = self.stick.getZ()
 
-        if (abs(self.stickInputY) < 0.1):
+        if (abs(self.stickInputY) < 0.2):
             self.realY = 0
         else:
             self.realY = self.stickInputY
-        if (abs(self.stickInputX) < 0.1):
+        if (abs(self.stickInputX) < 0.2):
             self.realX = 0
         else:
             self.realX = self.stickInputX
-        if (abs(self.stickInputZ) < 0.1):
+        if (abs(self.stickInputZ) < 0.2):
             self.realZ = 0
         else: 
             self.realZ = self.stickInputZ
 
-        self.MecanumDrive.driveCartesian(self.realY, self.realX, self.realZ)
+        self.MecanumDrive.driveCartesian(-self.realY, self.realX, self.realZ)
