@@ -106,6 +106,7 @@ class DriveTrain:
         elif timer.get() > duration*1:
             self.rightFront.stopMotor()
             self.leftFront.set(speed)
+    
 
 
 
