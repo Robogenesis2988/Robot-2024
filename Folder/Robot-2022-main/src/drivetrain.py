@@ -136,4 +136,4 @@ class MecanumDrive(DriveTrain):
         else: 
             self.realZ = self.stickInputZ
 
-        self.MecanumDrive.driveCartesian(-self.realY, self.realX, self.realZ)
+        self.MecanumDrive.driveCartesian(self.realY, -self.realZ, -self.realX)

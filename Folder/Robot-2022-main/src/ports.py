@@ -1,8 +1,8 @@
 class MotorPorts():
     # Drivetrain motors
     LEFT_FRONT = 1
-    LEFT_REAR = 3
-    RIGHT_FRONT = 0
+    LEFT_REAR = 0
+    RIGHT_FRONT = 3
     RIGHT_REAR = 2
 
     # Winch motors
@@ -12,8 +12,8 @@ class MotorPorts():
 
 class PneumaticPorts():
     # Used Ports: 0,1,2,3,7,6
-    DUMP = (1, 0)
-    CLIMB1 = (2, 3)
+    EXTEND = (1, 0)
+    CLAMP = (2, 3)
     CLIMB2 = (6, 7)
 
 

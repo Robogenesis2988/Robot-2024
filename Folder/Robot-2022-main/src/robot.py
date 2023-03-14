@@ -33,11 +33,11 @@ class Robot(wpilib.TimedRobot):
         #     wpilib.PneumaticsModuleType.CTREPCM, 5, 4)
 
         self.solenoidExtend = pneumatics.DoubleSolenoid(
-            *ports.PneumaticPorts.DUMP)
+            2,3)
         self.solenoidClamp = pneumatics.DoubleSolenoid(
-            *ports.PneumaticPorts.CLIMB1)
-        # self.solenoidClimb2 = pneumatics.DoubleSolenoid(
-        # *ports.PneumaticPorts.CLIMB2)
+            1,0)
+        #self.solenoidClimb2 = pneumatics.DoubleSolenoid(
+            #*ports.PneumaticPorts.CLIMB2)
 
         self.leftFront = wpilib.Talon(ports.MotorPorts.LEFT_FRONT)
         self.leftRear = wpilib.Talon(ports.MotorPorts.LEFT_REAR)
@@ -132,7 +132,7 @@ class Robot(wpilib.TimedRobot):
 
         if self.stick.getRawButtonPressed(ports.JoystickButtons.CLAMPTOGGLE):
             self.solenoidClamp.toggle()
-            # self.solenoidClimb2.toggle()
+            #self.solenoidClimb2.toggle()
 
         # Toggle speed multiplier on button 2
         if self.stick.getRawButtonPressed(ports.JoystickButtons.SPEEDMULTIPLIER):
@@ -141,15 +141,15 @@ class Robot(wpilib.TimedRobot):
             else:
                 self.drivetrain.speedMultiplier = 0.75
 
-         # Button 4 hold -> climber down
+         #Button 4 hold -> climber down
         if self.stick.getRawButton(ports.JoystickButtons.WINCHRETRACT):
-            self.leftFront.set(self, .25)
+             self.leftFront.set(self, .25)
         if self.stick.getRawButton(ports.JoystickButtons.WINCHRETRACT):
-            self.leftRear.set(self, .25)
+             self.leftRear.set(self, .25)
         if self.stick.getRawButton(ports.JoystickButtons.WINCHRETRACT):
-            self.rightFront.set(self, .25)
+             self.rightFront.set(self, .25)
         if self.stick.getRawButton(ports.JoystickButtons.WINCHRETRACT):
-            self.rightRear.set(self, .25)
+             self.rightRear.set(self, .25)
         #     self.rightWinch.winchRetract()
         #     # self.leftWinchMotor.set(0.1)
         #     # self.rightWinchMotor.set(0.1)
@@ -162,18 +162,18 @@ class Robot(wpilib.TimedRobot):
             # self.leftWinchMotor.set(0.1)
             # self.solenoidDump.open()
             # self.rightWinchMotor.set(-0.1)
-        # if self.stick.getRawButton(7):
+        #if self.stick.getRawButton(7):
         #    self.leftWinch.winchExtend()
-        # elif self.stick.getRawButton(9):
+        #elif self.stick.getRawButton(9):
         #    self.leftWinch.winchRetract()
-        # else:
+        #else:
         #    self.leftWinch.winchStop()
 
-        # if self.stick.getRawButton(8):
+        #if self.stick.getRawButton(8):
         #    self.rightWinch.winchExtend()
-        # elif self.stick.getRawButton(10):
+        #elif self.stick.getRawButton(10):
         #    self.rightWinch.winchRetract()
-        # else:
+        #else:
         #    self.rightWinch.winchStop()
             # self.rightWinch.winchStop()
             # self.leftWinchMotor.set(0)
