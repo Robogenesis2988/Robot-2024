@@ -30,6 +30,7 @@
     },
     "windows": {
       "/SmartDashboard/Field": {
+        "image": "C:\\Users\\robotics\\Documents\\GitHub\\Robot-2023\\2023 Field.jpg",
         "window": {
           "visible": true
         }

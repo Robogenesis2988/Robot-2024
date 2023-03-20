@@ -44,6 +44,8 @@ class Robot(wpilib.TimedRobot):
         self.rightFront = wpilib.Talon(ports.MotorPorts.RIGHT_FRONT)
         self.rightRear = wpilib.Talon(ports.MotorPorts.RIGHT_REAR)
 
+        self.safeLock = 0
+
         #self.leftWinchMotor = wpilib.Talon(ports.MotorPorts.LEFT_WINCH)
         #self.rightWinchMotor = wpilib.Spark(ports.MotorPorts.RIGHT_WINCH)
         # self.rightWinchMotor.setInverted(True)
@@ -58,8 +60,10 @@ class Robot(wpilib.TimedRobot):
         self.drivetrain.rightInverted(False)
         self.drivetrain.leftInverted(True)
         self.drivetrain.setDeadzone(0.5, 0.5)
-        self.drivetrain.speedMultiplier = 0.75
-        self.drivetrain.twistMultiplier = 0.75
+        self.drivetrain.speedMultiplier = 1
+        self.drivetrain.twistMultiplier = 1
+
+        
 
         # self.rightFront.setInverted(True)
         # self.rightRear.setInverted(True)
@@ -78,20 +82,38 @@ class Robot(wpilib.TimedRobot):
 
     def autonomousPeriodic(self):
         """This function is called periodically during autonomous."""
-        if (self.timer.get() < 2.5):
-            self.leftFront.set(-0.2)
-            self.leftRear.set(-0.2)
-            self.rightFront.set(-0.2)
-            self.rightRear.set(-0.2)
-        elif ((self.timer.get() > 2.5) & (self.timer.get() < 5)):
+        if (self.timer.get() < 1.5):
+            #self.drivetrain.(self.realY, -self.realZ, -self.realX)
+            self.solenoidClamp.close()
             self.solenoidExtend.open()
-            # self.solenoidClamp.open()
-            self.leftFront.set(99.9)
-            self.leftRear.set(99.9)
-            self.rightFront.set(99.9)
-            self.rightRear.set(99.9)
+            #self.drivetrain.moveRobot(.6, 0, 0)
+            #self.leftFront.set(0.6)
+            #self.leftRear.set(0.6)
+            #self.rightFront.set(0.6)
+            #self.rightRear.set(0.6)
+        #elif (self.timer.get() > 1.5 and self.timer.get() < 2.5):
+            #self.solenoidExtend.open()
+        #elif (self.timer.get() > 3 & self.timer.get() < 3.5):
+            #self.solenoidExtend.close()
+        elif ((self.timer.get() > 1.5) and (self.timer.get() < 2.7)):
+            #self.solenoidExtend.close()
+           #self.MecanumDrive.driveCartesian(self.realY, -self.realZ, -self.realX)
+            #self.solenoidClamp.open()
+            self.drivetrain.moveRobot(-.6, 0,0)
+            self.leftFront.set(0.6)
+            self.leftRear.set(0.6)
+            self.rightFront.set(0.6)
+            self.rightRear.set(0.6)
+            if self.timer.get() > 2.25 and self.timer.get() < 3:
+                self.solenoidExtend.close()
+        #elif self.timer.get() > 3 and self.timer.get() < 4:
+                #self.solenoidExtend.close()
         else:
-            self.drivetrain.moveRobot(0, 0, 0)
+            self.drivetrain.moveRobot(0, 0,0)
+            self.leftFront.set(0)
+            self.leftRear.set(0)
+            self.rightFront.set(0)
+            self.rightRear.set(0)
 
         # if self.timer.get() < 3:
         #     # drives foward for one second at 1/4 speed
@@ -100,7 +122,7 @@ class Robot(wpilib.TimedRobot):
         #     # from 1 - 4 seconds the solenoid extends
         #     self.solenoidDump.open()
         # # if self.solenoid1.get() == self.solenoid1.Value.kOff:
-        #     # self.solenoid1.set(self.solenoid1.Value.kForward)
+        #      self.solenoid1.set(self.solenoid1.Value.kForward)
         # elif (self.timer.get() > 6) and (self.timer.get() < 8):
         #     self.solenoidDump.close()
         # elif (self.timer.get() > 8) and (self.timer.get() < 10):
@@ -117,6 +139,7 @@ class Robot(wpilib.TimedRobot):
     def teleopInit(self) -> None:
         self.timer.reset()
         self.timer.start()
+        
 
     def teleopPeriodic(self):
         """This function is called periodically during operator control."""
@@ -127,6 +150,7 @@ class Robot(wpilib.TimedRobot):
         # self.drivetrain.motorTest(self.timer)
 
         # Toggle pistons on button 3
+        #if self.safeLock == 0:
         if self.stick.getRawButtonPressed(ports.JoystickButtons.EXTENDTOGGLE):
             self.solenoidExtend.toggle()
 
@@ -134,12 +158,21 @@ class Robot(wpilib.TimedRobot):
             self.solenoidClamp.toggle()
             #self.solenoidClimb2.toggle()
 
+        #if self.solenoidClamp.getState() == self.solenoidClamp.open():
+        #    self.safeLock = 1
+        #else:
+        #    self.safeLock = 0
+
+
         # Toggle speed multiplier on button 2
         if self.stick.getRawButtonPressed(ports.JoystickButtons.SPEEDMULTIPLIER):
-            if self.drivetrain.speedMultiplier == 0.75:
+            if self.drivetrain.speedMultiplier == 1:
                 self.drivetrain.speedMultiplier = 0.5
             else:
-                self.drivetrain.speedMultiplier = 0.75
+                self.drivetrain.speedMultiplier = 1
+
+        #if self.stick.getRawButtonPressed(ports.JoystickButtons.COMPRESSOR):
+            #wpilib.Compressor.disable
 
          #Button 4 hold -> climber down
         if self.stick.getRawButton(ports.JoystickButtons.WINCHRETRACT):

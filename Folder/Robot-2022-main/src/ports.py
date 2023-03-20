@@ -22,8 +22,9 @@ class JoystickPorts():
 
 
 class JoystickButtons():
+    
     WINCHEXTEND = 6
     WINCHRETRACT = 4
     CLAMPTOGGLE = 1
     EXTENDTOGGLE = 2
-    SPEEDMULTIPLIER = 2
+    SPEEDMULTIPLIER = 3
