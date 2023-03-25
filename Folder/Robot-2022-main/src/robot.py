@@ -25,7 +25,7 @@ class Robot(wpilib.TimedRobot):
         """
         cameraLaunch()
         self.gyro = wpilib.ADXRS450_Gyro()
-        self.gyro.calibrate()
+        
         wpilib.SmartDashboard.putNumber('Gyro Angle', self.gyro.getAngle())
         #print('this port' + str(self.gyro.getPort()))
         #wpilib.SmartDashboard.putNumber('GyroAngle', self.gyro.getAngle())
@@ -84,7 +84,7 @@ class Robot(wpilib.TimedRobot):
         """This function is run once each time the robot enters autonomous mode."""
         self.timer.reset()
         self.timer.start()
-        self.gyro.calibrate()
+        
         # autonomous.autonomousInit()
 
     def autonomousPeriodic(self):
@@ -93,31 +93,29 @@ class Robot(wpilib.TimedRobot):
             #self.drivetrain.(self.realY, -self.realZ, -self.realX)
             self.solenoidClamp.close()
             self.solenoidExtend.open()
-            #self.drivetrain.moveRobot(.6, 0, 0)
-            #self.leftFront.set(0.6)
-            #self.leftRear.set(0.6)
-            #self.rightFront.set(0.6)
-            #self.rightRear.set(0.6)
-        #elif (self.timer.get() > 1.5 and self.timer.get() < 2.5):
-            #self.solenoidExtend.open()
-        #elif (self.timer.get() > 3 & self.timer.get() < 3.5):
-            #self.solenoidExtend.close()
-        elif ((self.timer.get() > 1.5) and (self.timer.get() < 2.7)):
-            #self.solenoidExtend.close()
-           #self.MecanumDrive.driveCartesian(self.realY, -self.realZ, -self.realX)
-            #self.solenoidClamp.open()
-            self.drivetrain.moveRobot(-.6, 0,0)
-            self.leftFront.set(0.6)
-            self.leftRear.set(0.6)
-            self.rightFront.set(0.6)
-            self.rightRear.set(0.6)
+            wpilib.SmartDashboard.putNumber('Gyro Angle', self.gyro.getAngle())
+        elif ((self.timer.get() > 1.5) and (self.timer.get() < 4.5)):
+            wpilib.SmartDashboard.putNumber('Gyro Angle', self.gyro.getAngle())
+            self.leftFront.set(0.5)
+            self.leftRear.set(0.5)
+            self.rightFront.set(0.5)
+            self.rightRear.set(0.5)
             if self.timer.get() > 2.25 and self.timer.get() < 3:
                 self.solenoidExtend.close()
-        #elif (self.timer.get() > 3.5 and self.timer.get() < 15):
-            #while (self.gyro.getAngle() < 3):
-            #    self.leftFront.set(.2)
-            #    self.leftFront.set(.2)
-            #    self.rightFront.set(.2)
+        elif (self.timer.get() > 4 and self.timer.get() < 14):
+            while (self.gyro.getAngle() < -5): #strafe
+                self.leftFront.set(-0.3)
+                self.leftRear.set(-0.3)
+                self.rightFront.set(-0.3)
+                self.rightRear.set(-0.3)
+                wpilib.SmartDashboard.putNumber('Gyro Angle', self.gyro.getAngle())
+            while (self.gyro.getAngle() > 5):
+                self.leftFront.set(0.3)
+                self.leftRear.set(0.3)
+                self.rightFront.set(0.3)
+                self.rightRear.set(0.3)
+                wpilib.SmartDashboard.putNumber('Gyro Angle', self.gyro.getAngle())
+
         
         else:
             self.drivetrain.moveRobot(0, 0,0)
