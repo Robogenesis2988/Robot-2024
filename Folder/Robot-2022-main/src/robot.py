@@ -24,9 +24,10 @@ class Robot(wpilib.TimedRobot):
         should be used for any initialization code.
         """
         cameraLaunch()
-        self.gyro = wpilib.ADXRS450_Gyro()
-        self.gyro.calibrate()
-        wpilib.SmartDashboard.putNumber('Gyro Angle', self.gyro.getAngle())
+        #self.gyro = wpilib.ADXRS450_Gyro()
+        #self.realGyro = 0 
+        
+        #wpilib.SmartDashboard.putNumber('Gyro Angle', self.gyro.getAngle())
         #print('this port' + str(self.gyro.getPort()))
         #wpilib.SmartDashboard.putNumber('GyroAngle', self.gyro.getAngle())
 
@@ -84,43 +85,50 @@ class Robot(wpilib.TimedRobot):
         """This function is run once each time the robot enters autonomous mode."""
         self.timer.reset()
         self.timer.start()
-        self.gyro.calibrate()
+        #self.gyro.reset()
+        
         # autonomous.autonomousInit()
 
     def autonomousPeriodic(self):
         """This function is called periodically during autonomous."""
-        if (self.timer.get() < 1.5):
-            #self.drivetrain.(self.realY, -self.realZ, -self.realX)
+        if (self.timer.get() < 1.5): #scores cone
             self.solenoidClamp.close()
             self.solenoidExtend.open()
-            #self.drivetrain.moveRobot(.6, 0, 0)
-            #self.leftFront.set(0.6)
-            #self.leftRear.set(0.6)
-            #self.rightFront.set(0.6)
-            #self.rightRear.set(0.6)
-        #elif (self.timer.get() > 1.5 and self.timer.get() < 2.5):
-            #self.solenoidExtend.open()
-        #elif (self.timer.get() > 3 & self.timer.get() < 3.5):
-            #self.solenoidExtend.close()
-        elif ((self.timer.get() > 1.5) and (self.timer.get() < 2.7)):
-            #self.solenoidExtend.close()
-           #self.MecanumDrive.driveCartesian(self.realY, -self.realZ, -self.realX)
-            #self.solenoidClamp.open()
-            self.drivetrain.moveRobot(-.6, 0,0)
+            #self.realGyro = (self.gyro.getAngle() -.1)
+            #wpilib.SmartDashboard.putNumber('Gyro Angle', self.gyro.getAngle())
+        elif ((self.timer.get() > 1.5) and (self.timer.get() < 2.7)): #Backs up, either out of community or onto the charger
+            #self.realGyro = (self.gyro.getAngle() -.1)
+            #self.realGyro = abs(self.gyro.getAngle()) - abs(self.gyro.getRate())
+            #wpilib.SmartDashboard.putNumber('Real Gyro' , self.realGyro)            #puts gyro information for driver to see
+            #wpilib.SmartDashboard.putNumber('Gyro rate' , self.gyro.getRate())
+            #wpilib.SmartDashboard.putNumber('Gyro Angle', self.gyro.getAngle())
             self.leftFront.set(0.6)
             self.leftRear.set(0.6)
             self.rightFront.set(0.6)
             self.rightRear.set(0.6)
-            if self.timer.get() > 2.25 and self.timer.get() < 3:
+            if self.timer.get() > 2.25 and self.timer.get() < 3: #brings up the clamp and closes it 
+                self.solenoidClamp.open()
                 self.solenoidExtend.close()
-        #elif (self.timer.get() > 3.5 and self.timer.get() < 15):
-            #while (self.gyro.getAngle() < 3):
-            #    self.leftFront.set(.2)
-            #    self.leftFront.set(.2)
-            #    self.rightFront.set(.2)
-        
+        #elif (self.timer.get() > 4 and self.timer.get() < 14): #for the balancing or standing still portion 
+        #    self.realGyro = abs(self.gyro.getAngle()) - abs(self.gyro.getRate())
+        #    while (self.gyro.getAngle()< -3): #gyro reads less then negative three, robot moves in appropriate direction. 
+        #        self.leftFront.set(-0.3)
+        #        self.leftRear.set(-0.3)
+        #        self.rightFront.set(-0.3)
+        #        self.rightRear.set(-0.3)
+        #        wpilib.SmartDashboard.putNumber('Real Gyro' , self.realGyro)
+        #        wpilib.SmartDashboard.putNumber('Gyro rate' , self.gyro.getRate())
+        #        wpilib.SmartDashboard.putNumber('Gyro Angle', self.gyro.getAngle())
+        #    while (self.gyro.getAngle() > 3): #gyro reads more then 3 degrees, robot moves in appropriate direction 
+        #        self.leftFront.set(0.3)
+        #        self.leftRear.set(0.3)
+        #        self.rightFront.set(0.3)
+        #        self.rightRear.set(0.3)
+        #        wpilib.SmartDashboard.putNumber('Real Gyro' , self.realGyro)
+        #        wpilib.SmartDashboard.putNumber('Gyro rate' , self.gyro.getRate())
+        #        wpilib.SmartDashboard.putNumber('Gyro Angle', self.gyro.getAngle())
         else:
-            self.drivetrain.moveRobot(0, 0,0)
+            self.drivetrain.moveRobot(0, 0,0) #if none of the conditions are met, robot stands still
             self.leftFront.set(0)
             self.leftRear.set(0)
             self.rightFront.set(0)
@@ -135,7 +143,18 @@ class Robot(wpilib.TimedRobot):
         """This function is called periodically during operator control."""
 
         # Toggle pistons on button 3
-        wpilib.SmartDashboard.putNumber('Gyro Angle', self.gyro.getAngle())
+
+        #self.realGyro = (abs(self.gyro.getAngle()) -.1)
+        #self.gyro.reset()
+        #wpilib.SmartDashboard.putNumber('Real Gyro Angle', self.realGyro)
+        #self.realGyro = abs(self.gyro.getAngle()) - abs(self.gyro.getRate()) #gyroscope calculation
+        #wpilib.SmartDashboard.putNumber('realGyro' , self.realGyro)
+        #wpilib.SmartDashboard.putNumber('gyro rate' , self.gyro.getRate())
+        #wpilib.SmartDashboard.putNumber('Gyro Angle', self.gyro.getAngle())
+        wpilib.SmartDashboard.putNumber('Left Front', self.leftFront.get())
+        wpilib.SmartDashboard.putNumber('Left Rear', self.leftRear.get())
+        wpilib.SmartDashboard.putNumber('Right Front', self.rightFront.get())
+        wpilib.SmartDashboard.putNumber('Right Rear', self.rightRear.get())
         if self.safeLock == 0 and self.stick.getRawButtonPressed(ports.JoystickButtons.EXTENDTOGGLE):
             self.solenoidExtend.toggle()
 
@@ -147,9 +166,9 @@ class Robot(wpilib.TimedRobot):
         else:
             self.safeLock = 0
 
-        if self.stick.getRawButtonPressed(11):
-            if self.gyro.getAngle() > 1:
-                self.leftFront.set(.5)
+        #if self.stick.getRawButtonPressed(11):
+        #    if self.gyro.getAngle() > 1:
+        #        self.leftFront.set(.5)
 
 
         # Toggle speed multiplier on button 2
