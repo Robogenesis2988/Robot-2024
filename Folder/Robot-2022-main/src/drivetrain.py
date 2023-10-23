@@ -66,7 +66,7 @@ class DriveTrain:
         """
         self.moveRobot(*self.constrainJoystick(Joystick))
 
-    def moveRobot(self, speed: float, direction: float, twist: float):
+    #def moveRobot(self, speed: float, direction: float, twist: float):
         """
         Drive the robot in a direction at a speed for a duration
 
@@ -78,7 +78,7 @@ class DriveTrain:
 
         :param twist: the speed of the robot in the z(rotational) axis[-1, 1]
         """
-        raise ValueError("THIS SHOULD BE REPLACED!")
+        #raise ValueError("THIS SHOULD BE REPLACED!")
 
     def rightInverted(self, isInverted: bool) -> None:
         self.rightFront.setInverted(isInverted)
@@ -106,6 +106,7 @@ class DriveTrain:
         elif timer.get() > duration*1:
             self.rightFront.stopMotor()
             self.leftFront.set(speed)
+    
 
 
 
@@ -121,18 +122,31 @@ class MecanumDrive(DriveTrain):
         self.stickInputY = self.stick.getY()
         self.stickInputX = self.stick.getX()
         self.stickInputZ = self.stick.getZ()
+        
 
-        if (abs(self.stickInputY) < 0.1):
+        if (abs(self.stickInputY) < 0.2):
             self.realY = 0
         else:
             self.realY = self.stickInputY
-        if (abs(self.stickInputX) < 0.1):
+        if (abs(self.stickInputX) < 0.2):
             self.realX = 0
         else:
             self.realX = self.stickInputX
-        if (abs(self.stickInputZ) < 0.1):
+        if (abs(self.stickInputZ) < 0.2):
             self.realZ = 0
         else: 
             self.realZ = self.stickInputZ
+        
+        self.realY = (self.realY * self.speedMultiplier)
+        self.realX = (self.realX * self.speedMultiplier)
+        self.realZ = (self.realZ * self.speedMultiplier)
 
-        self.MecanumDrive.driveCartesian(self.realY, self.realX, self.realZ)
+        #if self.timer.get() < 15:
+            #self.realY = speed 
+            #self.realX = direction 
+            #self.realZ = twist
+
+
+        self.MecanumDrive.driveCartesian(self.realY, self.realZ, -self.realX)
+        #self.MecanumDrive.driveCartesian(speed, direction, twist)
+        #self.MecaumDrive.driveCartesian(speed,direction,twist)
