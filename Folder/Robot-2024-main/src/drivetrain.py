@@ -116,7 +116,7 @@ class MecanumDrive(DriveTrain):
         # run the parent's __init__ function
         super().__init__(leftFront, leftRear, rightFront, rightRear)
         self.MecanumDrive = wpilib.drive.MecanumDrive(
-            self.leftFront, self.leftRear, self.rightFront, self.rightRear)  # create a mecanum drive object
+            self.leftRear, self.leftFront, self.rightRear, self.rightFront,)  # create a mecanum drive object
 
     def moveRobot(self, speed: float, direction: float, twist: float):
         self.stickInputY = self.stick.getY()
@@ -147,6 +147,6 @@ class MecanumDrive(DriveTrain):
             #self.realZ = twist
 
 
-        self.MecanumDrive.driveCartesian(self.realY, self.realZ, -self.realX)
+        self.MecanumDrive.driveCartesian(-self.realX, -self.realY, -self.realZ)
         #self.MecanumDrive.driveCartesian(speed, direction, twist)
-        #self.MecaumDrive.driveCartesian(speed,direction,twist)
+        #self.MecaumDrive.driveCartesian(speed,direction,twist)     
