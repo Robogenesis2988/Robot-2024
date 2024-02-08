@@ -147,6 +147,6 @@ class MecanumDrive(DriveTrain):
             #self.realZ = twist
 
 
-        self.MecanumDrive.driveCartesian(self.realY, self.realZ, -self.realX)
+        self.MecanumDrive.driveCartesian(self.realY, -self.realZ, -self.realX)
         #self.MecanumDrive.driveCartesian(speed, direction, twist)
         #self.MecaumDrive.driveCartesian(Forward and Backwards, Twist , Strafe)
