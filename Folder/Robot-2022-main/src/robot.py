@@ -52,9 +52,9 @@ class Robot(wpilib.TimedRobot):
 
         # self.drive = wpilib.drive.MecanumDrive(self.leftFront, self.leftRear, self.rightFront, self.rightRear)
 
-        self.drivetrain = drivetrain.MecanumDrive(
+        self.drivetrain = drivetrain.DifferentialDrive(
             self.leftFront, self.leftRear, self.rightFront, self.rightRear)
-        self.drivetrain.rightInverted(True)
+        self.drivetrain.rightInverted(False)
         self.drivetrain.setDeadzone(0.5, 0.5)
         self.drivetrain.speedMultiplier = 0.75
         self.drivetrain.twistMultiplier = 0.75
@@ -116,19 +116,20 @@ class Robot(wpilib.TimedRobot):
         # self.drivetrain.motorTest(self.timer)
 
         # Toggle pistons on button 3
+        """
         if self.stick.getRawButtonPressed(ports.JoystickButtons.DUMPTOGGLE):
             self.solenoidDump.toggle()
 
         if self.stick.getRawButtonPressed(ports.JoystickButtons.CLIMBPISTONTOGGLE):
             self.solenoidClimb1.toggle()
             self.solenoidClimb2.toggle()
-
+        """
         # Toggle speed multiplier on button 2
         if self.stick.getRawButtonPressed(ports.JoystickButtons.SPEEDMULTIPLIER):
             if self.drivetrain.speedMultiplier == 0.75:
                 self.drivetrain.speedMultiplier = 0.5
             else:
-                self.drivetrain.speedMultiplier = 0.75
+                self.drivetrain.speedMultiplier = 1.0
 
         # Button 4 hold -> climber down
         # if self.stick.getRawButton(ports.JoystickButtons.WINCHRETRACT):
@@ -145,6 +146,7 @@ class Robot(wpilib.TimedRobot):
             # self.leftWinchMotor.set(0.1)
             # self.solenoidDump.open()
             # self.rightWinchMotor.set(-0.1)
+        """
         if self.stick.getRawButton(7):
             self.leftWinch.winchExtend()
         elif self.stick.getRawButton(9):
@@ -161,7 +163,9 @@ class Robot(wpilib.TimedRobot):
             # self.rightWinch.winchStop()
             # self.leftWinchMotor.set(0)
             # self.rightWinchMotor.set(0)
-
+        """
+        print(wpilib.Joystick.getTwist)
+        print("Hello World")
         self.drivetrain.drive(self.stick)
 
 

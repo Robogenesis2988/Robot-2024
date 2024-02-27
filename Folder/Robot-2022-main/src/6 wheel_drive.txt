@@ -13,10 +13,10 @@ class MyRobot(wpilib.TimedRobot):
         """Robot initialization function"""
 
         # create motor controller objects
-        m_left = wpilib.Talon(0)
-        m_right = wpilib.Talon(1)
+        m_Left = wpilib.Talon(0,1)
+        m_Right = wpilib.Talon(2,3)
         # object that handles basic drive operations
-        self.myRobot = wpilib.drive.DifferentialDrive(m_left, m_right)
+        self.myRobot = wpilib.drive.DifferentialDrive(m_Left,m_Right)
         self.myRobot.setExpiration(0.1)
 
         # joystick #0
@@ -29,7 +29,7 @@ class MyRobot(wpilib.TimedRobot):
     def teleopPeriodic(self):
         """Runs the motors with tank steering"""
         self.myRobot.arcadeDrive(
-            self.stick.getRawAxis(0), self.stick.getRawAxis(1), True
+            self.stick.getRawAxis(0, 1), self.stick.getRawAxis(1, 2), True
         )
 
 
