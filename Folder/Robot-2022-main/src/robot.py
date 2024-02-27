@@ -30,14 +30,14 @@ class Robot(wpilib.TimedRobot):
         #     wpilib.PneumaticsModuleType.CTREPCM, 3, 2)
         # self.solenoid3 = wpilib.DoubleSolenoid(
         #     wpilib.PneumaticsModuleType.CTREPCM, 5, 4)
-
+        """
         self.solenoidDump = pneumatics.DoubleSolenoid(
             *ports.PneumaticPorts.DUMP)
         self.solenoidClimb1 = pneumatics.DoubleSolenoid(
             *ports.PneumaticPorts.CLIMB1)
         self.solenoidClimb2 = pneumatics.DoubleSolenoid(
             *ports.PneumaticPorts.CLIMB2)
-
+          """
         self.leftFront = wpilib.Talon(ports.MotorPorts.LEFT_FRONT)
         self.leftRear = wpilib.Talon(ports.MotorPorts.LEFT_REAR)
         self.rightFront = wpilib.Talon(ports.MotorPorts.RIGHT_FRONT)
@@ -125,12 +125,13 @@ class Robot(wpilib.TimedRobot):
             self.solenoidClimb2.toggle()
         """
         # Toggle speed multiplier on button 2
+        """
         if self.stick.getRawButtonPressed(ports.JoystickButtons.SPEEDMULTIPLIER):
             if self.drivetrain.speedMultiplier == 0.75:
-                self.drivetrain.speedMultiplier = 0.5
+                self.drivetrain.speedMultiplier = 0
             else:
-                self.drivetrain.speedMultiplier = 1.0
-
+                self.drivetrain.speedMultiplier = 0
+        """
         # Button 4 hold -> climber down
         # if self.stick.getRawButton(ports.JoystickButtons.WINCHRETRACT):
         #     self.leftWinch.winchRetract()

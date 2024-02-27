@@ -7,7 +7,6 @@ import wpilib.simulation
 from pyfrc.physics.core import PhysicsInterface
 from pyfrc.physics import drivetrains
 
-
 class PhysicsEngine:
     """
     Simulates a 4-wheel mecanum robot using Tank Drive joystick control
@@ -27,13 +26,13 @@ class PhysicsEngine:
         self.rf_motor = wpilib.simulation.PWMSim(2)
         self.rr_motor = wpilib.simulation.PWMSim(3)
 
-        self.lwinch = wpilib.simulation.PWMSim(4)
-        self.rwinch = wpilib.simulation.PWMSim(5)
+        #self.lwinch = wpilib.simulation.PWMSim(4)
+        #self.rwinch = wpilib.simulation.PWMSim(5)
 
         # Gyro
         self.gyro = wpilib.simulation.AnalogGyroSim(1)
 
-        self.drivetrain = drivetrains.MecanumDrivetrain()
+        self.drivetrain = drivetrains.FourMotorDrivetrain()
 
     def update_sim(self, now, tm_diff):
         """
@@ -64,4 +63,4 @@ class PhysicsEngine:
         # Update the gyro simulation
         # -> FRC gyros are positive clockwise, but the returned pose is positive
         #    counter-clockwise
-        self.gyro.setAngle(-pose.rotation().degrees())
+        self.gyro.setAngle(pose.rotation().degrees())
