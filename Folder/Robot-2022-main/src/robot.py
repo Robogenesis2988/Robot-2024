@@ -164,8 +164,9 @@ class Robot(wpilib.TimedRobot):
             # self.leftWinchMotor.set(0)
             # self.rightWinchMotor.set(0)
         """
-        print(wpilib.Joystick.getTwist)
-        print("Hello World")
+        #print(float(wpilib.Joystick.getTwist))
+        #print(float(wpilib.Joystick.getRawAxis))
+        #print("Hello World")
         self.drivetrain.drive(self.stick)
 
 

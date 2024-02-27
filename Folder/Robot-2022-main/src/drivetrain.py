@@ -87,4 +87,4 @@ class DifferentialDrive(SixWheelDrivetrain):
         )
         """Runs the motors with tank steering"""
     def moveRobot(self, speed: float, direction: float, twist: float):
-        self.DifferentialDrive.arcadeDrive(speed, direction,twist)
+        self.DifferentialDrive.arcadeDrive(speed, direction, twist)
