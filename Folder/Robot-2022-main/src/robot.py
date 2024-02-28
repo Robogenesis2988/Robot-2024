@@ -54,7 +54,8 @@ class Robot(wpilib.TimedRobot):
 
         self.drivetrain = drivetrain.DifferentialDrive(
             self.leftFront, self.leftRear, self.rightFront, self.rightRear)
-        self.drivetrain.rightInverted(False)
+        #self.drivetrain.rightInverted(True)
+        #self.drivetrain.leftInverted(True)
         self.drivetrain.setDeadzone(0.5, 0.5)
         self.drivetrain.speedMultiplier = 0.75
         self.drivetrain.twistMultiplier = 0.75

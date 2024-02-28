@@ -17,8 +17,8 @@ class DeadzoneMode(Enum):
 
 
 class SixWheelDrivetrain:
-    deadzone: float = 0
-    deadzone_twist: float = 0
+    deadzone: float = 0.2
+    deadzone_twist: float = 0.2
     deadzone_mode: DeadzoneMode = DeadzoneMode.CUTOFF
     speedMultiplier: float = 1
     twistMultiplier: float = 1
@@ -48,17 +48,18 @@ class SixWheelDrivetrain:
         angle = Joystick.getDirectionDegrees()
         rotate = Joystick.getTwist()
 
-        if mag < self.deadzone:
+        if abs(mag) < self.deadzone:
             mag = 0
         if abs(rotate) < self.deadzone_twist:
             rotate = 0
+
         mag *= self.speedMultiplier
         rotate *= self.twistMultiplier 
         return [mag, angle, rotate]
     
     def setDeadzone(self, deadzone_move: float, deadzone_twist: float, deadzone_mode: DeadzoneMode = DeadzoneMode.CUTOFF):
         self.deadzone = deadzone_move
-        self.deadzone = deadzone_twist
+        self.deadzone_twist = deadzone_twist
         self.deadzone_mode = deadzone_mode
 
 
@@ -84,7 +85,9 @@ class DifferentialDrive(SixWheelDrivetrain):
         super().__init__(leftFront, leftBack, rightFront, rightBack)
         self.DifferentialDrive = wpilib.drive.DifferentialDrive(
             self.leftMotorGroup, self.rightMotorGroup
+            
         )
         """Runs the motors with tank steering"""
     def moveRobot(self, speed: float, direction: float, twist: float):
-        self.DifferentialDrive.curvatureDrive(speed, direction, twist)
+        self.DifferentialDrive.curvatureDrive(twist, -direction, speed)
+#twist, direction, speed
