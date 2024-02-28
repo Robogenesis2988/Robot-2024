@@ -165,9 +165,12 @@ class Robot(wpilib.TimedRobot):
             # self.leftWinchMotor.set(0)
             # self.rightWinchMotor.set(0)
         """
+<<<<<<< Updated upstream
         #print(float(wpilib.Joystick.getTwist))
         #print(float(wpilib.Joystick.getRawAxis))
         #print("Hello World")
+=======
+>>>>>>> Stashed changes
         self.drivetrain.drive(self.stick)
 
 

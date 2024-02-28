@@ -17,8 +17,14 @@ class DeadzoneMode(Enum):
 
 
 class SixWheelDrivetrain:
+<<<<<<< Updated upstream
     deadzone: float = 0
     deadzone_twist: float = 0
+=======
+    deadzone: float = 0.5
+    deadzone_twist: float = 0.5
+    deadzone_angle: float = 0.5
+>>>>>>> Stashed changes
     deadzone_mode: DeadzoneMode = DeadzoneMode.CUTOFF
     speedMultiplier: float = 1
     twistMultiplier: float = 1
@@ -48,10 +54,19 @@ class SixWheelDrivetrain:
         angle = Joystick.getDirectionDegrees()
         rotate = Joystick.getTwist()
 
+<<<<<<< Updated upstream
         if mag < self.deadzone:
             mag = 0
         if abs(rotate) < self.deadzone_twist:
             rotate = 0
+=======
+        if abs(mag) < self.deadzone:
+            mag = 0
+        if abs(rotate) < self.deadzone_twist:
+            rotate = 0
+        if abs(angle) < self.deadzone_angle:
+                angle = 0
+>>>>>>> Stashed changes
         mag *= self.speedMultiplier
         rotate *= self.twistMultiplier 
         return [mag, angle, rotate]
@@ -72,14 +87,23 @@ class SixWheelDrivetrain:
     
     def rightInverted(self,isInverted: bool) -> None:
         self.leftFront.setInverted(isInverted)
+<<<<<<< Updated upstream
+=======
+        #self.leftMiddle.setInverted(isInverted)
+>>>>>>> Stashed changes
         self.leftBack.setInverted(isInverted)
 
     def leftInverted(self, isInverted: bool) -> None:
         self.rightFront.setInverted(isInverted)
+<<<<<<< Updated upstream
+=======
+        #self.rightMiddle.setInverted(isInverted)
+>>>>>>> Stashed changes
         self.rightBack.setInverted(isInverted)
 
 class DifferentialDrive(SixWheelDrivetrain):
 
+<<<<<<< Updated upstream
     def __init__(self,leftFront: wpilib.interfaces.MotorController, leftBack: wpilib.interfaces.MotorController, rightFront: wpilib.interfaces.MotorController, rightBack: wpilib.interfaces.MotorController):
         super().__init__(leftFront, leftBack, rightFront, rightBack)
         self.DifferentialDrive = wpilib.drive.DifferentialDrive(
@@ -88,3 +112,12 @@ class DifferentialDrive(SixWheelDrivetrain):
         """Runs the motors with tank steering"""
     def moveRobot(self, speed: float, direction: float, twist: float):
         self.DifferentialDrive.curvatureDrive(speed, direction, twist)
+=======
+    def __init__(self, leftFront: wpilib.interfaces.MotorController, leftBack: wpilib.interfaces.MotorController, rightFront: wpilib.interfaces.MotorController, rightBack: wpilib.interfaces.MotorController):
+        super().__init__(leftFront, leftBack, rightFront, rightBack)
+        self.DifferentialDrive = wpilib.drive.DifferentialDrive(
+            self.leftMotorGroup, self.rightMotorGroup)
+        """Runs the motors with tank steering"""
+    def moveRobot(self, speed: float, direction: float, twist: float):
+        self.DifferentialDrive.arcadeDrive(speed, direction, twist)
+>>>>>>> Stashed changes
