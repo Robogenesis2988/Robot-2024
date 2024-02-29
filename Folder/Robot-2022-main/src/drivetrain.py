@@ -7,6 +7,7 @@
 import wpilib
 import wpilib.drive
 import wpilib.interfaces 
+import ports
 from enum import Enum, auto
 
 class DeadzoneMode(Enum):
@@ -17,10 +18,10 @@ class DeadzoneMode(Enum):
 
 
 class SixWheelDrivetrain:
-    deadzone: float = 0.2
-    deadzone_twist: float = 0.2
+    deadzone: float = 0.05
+    deadzone_twist: float = 0.05
     deadzone_mode: DeadzoneMode = DeadzoneMode.CUTOFF
-    speedMultiplier: float = 1
+    speedMultiplier: float = 2
     twistMultiplier: float = 1
 
 
@@ -44,18 +45,19 @@ class SixWheelDrivetrain:
         self.stick = wpilib.Joystick(0)
 
     def constrainJoystick(self, Joystick: wpilib.Joystick):
-        mag = Joystick.getMagnitude()
-        angle = Joystick.getDirectionDegrees()
-        rotate = Joystick.getTwist()
-
+        mag = Joystick.getMagnitude() 
+        angle = Joystick.getDirectionDegrees() #angle
+        rotate = Joystick.getTwist() #rotate
+        cheese = Joystick.getRawButtonPressed(3)
+        print(str(cheese))
+        cheese = Joystick.getY()
         if abs(mag) < self.deadzone:
             mag = 0
         if abs(rotate) < self.deadzone_twist:
             rotate = 0
-
-        mag *= self.speedMultiplier
+        #mag *= self.speedMultiplier
         rotate *= self.twistMultiplier 
-        return [mag, angle, rotate]
+        return [rotate, -angle, mag, cheese]
     
     def setDeadzone(self, deadzone_move: float, deadzone_twist: float, deadzone_mode: DeadzoneMode = DeadzoneMode.CUTOFF):
         self.deadzone = deadzone_move
@@ -88,6 +90,24 @@ class DifferentialDrive(SixWheelDrivetrain):
             
         )
         """Runs the motors with tank steering"""
-    def moveRobot(self, speed: float, direction: float, twist: float):
-        self.DifferentialDrive.curvatureDrive(twist, -direction, speed)
+    def moveRobot(self, speed: float, direction: float, twist: float, cheddar: float):
+        gouda = True
+        if (twist > 0):
+            cheese = True
+        else:
+            cheese = False
+        """
+        if(cheddar):
+            gouda = False
+        else:
+            gouda = True
+        print("Gouda: " + str(gouda))
+        if(gouda):
+            self.DifferentialDrive.curvatureDrive(speed, -twist, cheese)
+        else:
+        """
+        if(cheddar > 0):
+            self.DifferentialDrive.curvatureDrive(-speed, -twist, cheese)
+        else:
+            self.DifferentialDrive.curvatureDrive(-speed, twist, cheese)
 #twist, direction, speed

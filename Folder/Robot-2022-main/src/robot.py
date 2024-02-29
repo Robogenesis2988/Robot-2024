@@ -60,8 +60,10 @@ class Robot(wpilib.TimedRobot):
         self.drivetrain.speedMultiplier = 0.75
         self.drivetrain.twistMultiplier = 0.75
 
-        # self.rightFront.setInverted(True)
-        # self.rightRear.setInverted(True)
+        self.rightFront.setInverted(True)
+        self.rightRear.setInverted(True)
+        self.leftFront.setInverted(True)
+        self.leftRear.setInverted(True)
 
         self.stick = wpilib.Joystick(ports.JoystickPorts.JOY)
 
