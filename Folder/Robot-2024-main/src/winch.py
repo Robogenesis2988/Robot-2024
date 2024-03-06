@@ -18,6 +18,7 @@ class Winch:
         self.winchMotor.set(0)
 
 
+
 # class winch:
 #     def __init__(self, winchMotor: wpilib.interfaces.MotorController) -> None:
 #         self.winchMotor = winchMotor

@@ -52,12 +52,18 @@ class Robot(wpilib.TimedRobot):
 
         self.safeLock = 0
 
-        #self.leftWinchMotor = wpilib.Talon(ports.MotorPorts.LEFT_WINCH)
-        #self.rightWinchMotor = wpilib.Spark(ports.MotorPorts.RIGHT_WINCH)
-        # self.rightWinchMotor.setInverted(True)
+        self.leftWinchMotor = wpilib.Spark(ports.MotorPorts.LEFT_WINCH)
+        self.rightWinchMotor = wpilib.Talon(ports.MotorPorts.RIGHT_WINCH)
+        self.rightWinchMotor.setInverted(True)
 
-        #self.leftWinch = winch.Winch(self.leftWinchMotor)
-        #self.rightWinch = winch.Winch(self.rightWinchMotor)
+        self.leftWinch = winch.Winch(self.leftWinchMotor)
+        self.rightWinch = winch.Winch(self.rightWinchMotor)
+
+        self.windUp = wpilib.Talon(ports.MotorPorts.WIND_UP)
+        self.shoot = wpilib.Talon(ports.MotorPorts.SHOOT)
+        self.intakeSpin = wpilib.Talon(ports.MotorPorts.INTAKE_SPIN)
+        self.intakeArm = wpilib.Talon(ports.MotorPorts.INTAKE_ARM)
+
 
         # self.drive = wpilib.drive.MecanumDrive(self.leftFront, self.leftRear, self.rightFront, self.rightRear)
 
@@ -80,30 +86,105 @@ class Robot(wpilib.TimedRobot):
 
         self.timer = wpilib.Timer()
 
+    def teleopInit(self) -> None:
+        self.timer.reset()
+        self.timer.start()
+        
+    def teleopPeriodic(self):
+        """This function is called periodically during operator control."""
+
+        # Toggle pistons on button 3
+        wpilib.SmartDashboard.putNumber('Gyro Angle', self.gyro.getAngle())
+        #if self.safeLock == 0 and self.stick.getRawButtonPressed(ports.JoystickButtons.EXTENDTOGGLE):
+        #    self.solenoidExtend.toggle()#
+
+        #if self.stick.getRawButtonPressed(ports.JoystickButtons.CLAMPTOGGLE):
+        #    self.solenoidClamp.toggle()
+
+        #if self.solenoidClamp.getState() == False:
+        #    self.safeLock = 1
+        #else:
+        #    self.safeLock = 0
+
+        if self.stick.getRawButtonPressed(11):
+            if self.gyro.getAngle() > 1:
+                self.leftFront.set(.5)
+
+        if self.stick.getRawButton(10) > 0: #winch go up 
+            self.rightWinchMotor.set(0.5)
+            self.leftWinchMotor.set(0.5)
+            
+
+        elif self.stick.getRawButton(9) > 0: #winch go down
+            self.rightWinchMotor.set(-0.5)
+            self.leftWinchMotor.set(-0.5)
+            
+
+        else: #winch stop
+            self.rightWinchMotor.set(0)
+            self.leftWinchMotor.set(0)
+
+
+        if self.stick.getRawButton(1) > 0: #Wind up for shooting
+            self.windUp.set(1)
+        else:
+            self.windUp.set(0)
+
+        if self.stick.getRawButton(2) > 0: #Shoot
+            self.shoot.set(0.25) #may need tweaked
+        else:
+            self.shoot.set(0)
+
+        if self.stick.getRawButton(4) > 0: #lower arm
+            self.intakeArm.set(0.5) #may need inverted 
+        elif self.stick.getRawButton(6) > 0: #raise arm
+            self.intakeArm.set(-0.5) #may need inverted
+        else:
+            self.intakeArm.set(0)
+
+        if self.stick.getRawButton(3) > 0: #lower arm
+            self.intakeSpin.set(0.5) #speed needs tweaked 
+        else:
+            self.intakeSpin.set(0)
+
+        
+            
+
+
+        # Toggle speed multiplier on button 2
+        if self.stick.getRawButtonPressed(ports.JoystickButtons.SPEEDMULTIPLIER):
+            if self.drivetrain.speedMultiplier == 1:
+                self.drivetrain.speedMultiplier = 0.5
+            else:
+                self.drivetrain.speedMultiplier = 1
+
+        self.drivetrain.drive(self.stick)
+
     def autonomousInit(self):
         """This function is run once each time the robot enters autonomous mode."""
         self.timer.reset()
         self.timer.start()
-        
-        # autonomous.autonomousInit()
+    
+    # autonomous.autonomousInit()
 
     def autonomousPeriodic(self):
         """This function is called periodically during autonomous."""
-        if (self.timer.get() < 1.5):
+        if (self.timer.get() < 3.75):
+            self.leftFront.set(-1) #-1, 1, 1, -1 is FORWARD!!!!!!!!!!!!!!!!!!!! Port 1
+            self.leftRear.set(1) #1, -1, -1, 1 is BACKWARD!!!!!!!!!!!!!!!!!!!!! Port 0
+            self.rightFront.set(1)  #0, -1, 0, -1 OR 0, 1, 0, 1 is LEFT!!!!!!!! Port 3 
+            self.rightRear.set(-1)  #-1, 0, -1, 0 OR 1, 0, 1, 0 is RIGHT!!!!!!! Port 2
             #self.drivetrain.(self.realY, -self.realZ, -self.realX)
-            self.solenoidClamp.close()
-            self.solenoidExtend.open()
-            wpilib.SmartDashboard.putNumber('Gyro Angle', self.gyro.getAngle())
-        elif ((self.timer.get() > 1.5) and (self.timer.get() < 4.5)):
-            wpilib.SmartDashboard.putNumber('Gyro Angle', self.gyro.getAngle())
-            self.leftFront.set(0.5)
-            self.leftRear.set(0.5)
-            self.rightFront.set(0.5)
-            self.rightRear.set(0.5)
-            if self.timer.get() > 2.25 and self.timer.get() < 3:
-                self.solenoidExtend.close()
-        elif (self.timer.get() > 4 and self.timer.get() < 14):
-            while (self.gyro.getAngle() < -5): #strafe
+            #self.solenoidClamp.close()
+            #self.solenoidExtend.open()
+            #wpilib.SmartDashboard.putNumber('Gyro Angle', self.gyro.getAngle())
+        else:
+            self.drivetrain.moveRobot(0, 0, 0)
+            self.leftFront.set(0)
+            self.leftRear.set(0)
+            self.rightFront.set(0)
+            self.rightRear.set(0)             
+'''            while (self.gyro.getAngle() < -5): #strafe  #THIS GOES ON LINE 107 NORMALLY; NOT USING PNEUMATICS, SO COMMENTED OUT
                 self.leftFront.set(-0.3)
                 self.leftRear.set(-0.3)
                 self.rightFront.set(-0.3)
@@ -115,49 +196,8 @@ class Robot(wpilib.TimedRobot):
                 self.rightFront.set(0.3)
                 self.rightRear.set(0.3)
                 wpilib.SmartDashboard.putNumber('Gyro Angle', self.gyro.getAngle())
-
-        
-        else:
-            self.drivetrain.moveRobot(0, 0,0)
-            self.leftFront.set(0)
-            self.leftRear.set(0)
-            self.rightFront.set(0)
-            self.rightRear.set(0)
-
-    def teleopInit(self) -> None:
-        self.timer.reset()
-        self.timer.start()
-        
-
-    def teleopPeriodic(self):
-        """This function is called periodically during operator control."""
-
-        # Toggle pistons on button 3
-        wpilib.SmartDashboard.putNumber('Gyro Angle', self.gyro.getAngle())
-        if self.safeLock == 0 and self.stick.getRawButtonPressed(ports.JoystickButtons.EXTENDTOGGLE):
-            self.solenoidExtend.toggle()
-
-        if self.stick.getRawButtonPressed(ports.JoystickButtons.CLAMPTOGGLE):
-            self.solenoidClamp.toggle()
-
-        if self.solenoidClamp.getState() == False:
-            self.safeLock = 1
-        else:
-            self.safeLock = 0
-
-        if self.stick.getRawButtonPressed(11):
-            if self.gyro.getAngle() > 1:
-                self.leftFront.set(.5)
-
-
-        # Toggle speed multiplier on button 2
-        if self.stick.getRawButtonPressed(ports.JoystickButtons.SPEEDMULTIPLIER):
-            if self.drivetrain.speedMultiplier == 1:
-                self.drivetrain.speedMultiplier = 0.5
-            else:
-                self.drivetrain.speedMultiplier = 1
-
-        self.drivetrain.drive(self.stick)
+'''
+    
 
 
 if __name__ == "__main__":
