@@ -25,14 +25,5 @@ class JoystickPorts():
     #WINCHEXTEND = 6
     #WINCHRETRACT = 4
     #CLIMBPISTONTOGGLE = 5
-    ItisWhatitIs = 3
+    #DUMPTOGGLE = 3
     #SPEEDMULTIPLIER = 2
-
-    ''' 
-    ChargeUp = 1 #Trigger
-    Shoot = 2 #Natural Thumb Button
-    Intake?? = 3-6 #Hat Buttons as Needed
-    WinchExtend = 12 #Base Button Closest to Throttle and Joystick
-    WinchRetract = 7 #Base Button Furthest From Throttle and Joystick
-    ??? = 8-11 #Other Functionality As needed
-    '''
