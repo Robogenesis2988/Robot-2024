@@ -1,6 +1,23 @@
 {
   "HALProvider": {
+    "Other Devices": {
+      "ADXRS450[0]": {
+        "header": {
+          "open": true
+        }
+      },
+      "Compressor[0]": {
+        "header": {
+          "open": true
+        }
+      }
+    },
     "PWM Outputs": {
+      "window": {
+        "visible": true
+      }
+    },
+    "RoboRIO": {
       "window": {
         "visible": true
       }

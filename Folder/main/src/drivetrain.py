@@ -2,6 +2,7 @@ import wpilib
 import wpilib.drive
 import wpilib.interfaces
 from enum import Enum, auto
+import wpimath
 
 
 class DeadzoneMode(Enum):
@@ -147,6 +148,7 @@ class MecanumDrive(DriveTrain):
             #self.realZ = twist
 
 
-        self.MecanumDrive.driveCartesian(-self.realX, -self.realY, -self.realZ)
+        # self.MecanumDrive.driveCartesian(-self.realX, -self.realY, -self.realZ)
+        self.MecanumDrive.drivePolar(self.stick.getMagnitude(),wpimath.geometry.Rotation2d.fromDegrees(self.stick.getDirectionDegrees()+90),-self.stick.getZ())
         #self.MecanumDrive.driveCartesian(speed, direction, twist)
         #self.MecaumDrive.driveCartesian(speed,direction,twist)     

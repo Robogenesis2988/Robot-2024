@@ -31,7 +31,8 @@ class PhysicsEngine:
         self.rwinch = wpilib.simulation.PWMSim(5)
 
         # Gyro
-        self.gyro = wpilib.simulation.AnalogGyroSim(1)
+        g = wpilib.ADXRS450_Gyro()
+        self.gyro = wpilib.simulation.ADXRS450_GyroSim(g)
 
         self.drivetrain = drivetrains.MecanumDrivetrain()
 
