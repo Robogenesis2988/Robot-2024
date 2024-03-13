@@ -110,12 +110,12 @@ class Robot(wpilib.TimedRobot):
             if self.gyro.getAngle() > 1:
                 self.leftFront.set(.5)
 
-        if self.stick.getRawButton(10) > 0: #winch go up 
+        if self.stick.getRawButton(6) > 0: #winch go up 
             self.rightWinchMotor.set(0.5)
             self.leftWinchMotor.set(0.5)
             
 
-        elif self.stick.getRawButton(9) > 0: #winch go down
+        elif self.stick.getRawButton(4) > 0: #winch go down
             self.rightWinchMotor.set(-0.5)
             self.leftWinchMotor.set(-0.5)
             
@@ -123,7 +123,7 @@ class Robot(wpilib.TimedRobot):
         else: #winch stop
             self.rightWinchMotor.set(0)
             self.leftWinchMotor.set(0)
-
+        """
 
         if self.stick.getRawButton(1) > 0: #Wind up for shooting
             self.windUp.set(1)
@@ -147,7 +147,7 @@ class Robot(wpilib.TimedRobot):
         else:
             self.intakeSpin.set(0)
 
-        
+        """
             
 
 

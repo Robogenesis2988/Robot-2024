@@ -4,12 +4,13 @@
 """
 
 import wpilib
-
+import cscore as cs
 
 
 def cameraLaunch():
     
-    wpilib.CameraServer.launch()
+    cs.CameraServer.startAutomaticCapture()
+    cs.CameraServer.startAutomaticCapture()
 
 #from cscore import CameraServer
 
