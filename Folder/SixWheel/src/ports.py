@@ -21,9 +21,9 @@ class JoystickPorts():
     JOY = 0
 
 
-#class JoystickButtons():
-    #WINCHEXTEND = 6
-    #WINCHRETRACT = 4
-    #CLIMBPISTONTOGGLE = 5
-    #DUMPTOGGLE = 3
-    #SPEEDMULTIPLIER = 2
+class JoystickButtons():
+    WINCHEXTEND = 6
+    WINCHRETRACT = 4
+    CLIMBPISTONTOGGLE = 5
+    DUMPTOGGLE = 3
+    SPEEDMULTIPLIER = 2

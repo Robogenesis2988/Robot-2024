@@ -135,21 +135,24 @@ class Robot(wpilib.TimedRobot):
             else:
                 self.drivetrain.speedMultiplier = 0
         """
-        # Button 4 hold -> climber down
-        # if self.stick.getRawButton(ports.JoystickButtons.WINCHRETRACT):
-        #     self.leftWinch.winchRetract()
-        #     self.rightWinch.winchRetract()
-        #     # self.leftWinchMotor.set(0.1)
-        #     # self.rightWinchMotor.set(0.1)
-
+        #Button 4 hold -> climber down
+        if self.stick.getRawButton(ports.JoystickButtons.WINCHRETRACT):
+             #self.leftWinch.winchRetract()
+             #self.rightWinch.winchRetract()
+             self.leftWinchMotor.set(0.1)
+             self.rightWinchMotor.set(0.1)
+            
         # # Button 6 hold -> climber up
-        # elif self.stick.getRawButton(ports.JoystickButtons.WINCHEXTEND):
-        #     self.leftWinch.winchExtend()
-        #     self.rightWinch.winchExtend()
+        elif self.stick.getRawButton(ports.JoystickButtons.WINCHEXTEND):
+            #self.leftWinch.winchExtend()
+            #self.rightWinch.winchExtend()
             # print("go!")
-            # self.leftWinchMotor.set(0.1)
-            # self.solenoidDump.open()
-            # self.rightWinchMotor.set(-0.1)
+            self.leftWinchMotor.set(-0.1)
+            #self.solenoidDump.open()
+            self.rightWinchMotor.set(-0.1)
+        else:
+            self.leftWinch.winchStop()
+            self.rightWinch.winchStop()
         """
         if self.stick.getRawButton(7):
             self.leftWinch.winchExtend()

@@ -3,7 +3,7 @@ import wpilib.interfaces
 
 
 class Winch:
-    speed = 0.75
+    speed = 1
 
     def __init__(self, winchMotor: wpilib.interfaces.MotorController) -> None:
         self.winchMotor = winchMotor
