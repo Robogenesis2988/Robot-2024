@@ -1,27 +1,32 @@
-# import wpilib
-# import wpilib.drive
+import wpilib
+import wpilib.drive
 
-# from drivetrain import DriveTrain
+from drivetrain import DriveTrain
 
+"""
+This won't be called in the robot.py file unless you decide to replace the robot.py autonomous with
+calling functions from this autonomous either way works we're just not really using this autonomous.
+"""
 
+timer = wpilib.Timer
 
-# timer = wpilib.Timer
+def autonomousInitialization():
+    """
+    This function is called once at the start of Autonomous.
+    This can be used to start the timer.
+    """
+    timer.reset()
+    timer.start()
 
-# #def autnomousInit():
-# #    timer.reset()
-# #    timer.start()
-
-# #def autonomousPeriodic(drive: DriveTrain):
-# #    if timer.get() < 2:
-# #        drive.drivePolar(.25,0,0) #drives foward for one second at 1/4 speed
-# #    elif (timer.get() > 2) & (timer.get() < 4):
-# #        solenoidClimb1.set(solenoid1.Value.kForward) #from 1 - 4 seconds the solenoid extends 
-# #        # if self.solenoid1.get() == self.solenoid1.Value.kOff:
-#             #self.solenoid1.set(self.solenoid1.Value.kForward)
-# #    elif (timer.get() > 4) & (timer.get() < 6):
-# #        self.solenoid1.set(self.solenoid1.Value.kReverse)
-# #    elif (timer.get() > 6) & (timer.get() < 8):
-# #        drive.drivePolar(0,0,.72)
+def autonomousPeriodicCommands(drive: DriveTrain):
+    """
+    This function is called periodically (every 1 bajillionith of a second (not literally)).
+    This is where the movement for autonomous should be programmed.
+    """
+    if timer.get() < 1.5:
+        drive.drivePolar(.25,0,0) #drives foward for one second at 1/4 speed
+    else:
+        drive.drivePolar(0,0,0)
 
 # # class TimedAutonomous():
 # #     auto_actions = []
