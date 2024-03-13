@@ -49,7 +49,7 @@ class SixWheelDrivetrain:
         angle = Joystick.getDirectionDegrees() #angle
         rotate = Joystick.getTwist() #rotate
         cheese = Joystick.getRawButtonPressed(3)
-        print(str(cheese))
+        #print(str(cheese))
         cheese = Joystick.getY()
         if abs(mag) < self.deadzone:
             mag = 0

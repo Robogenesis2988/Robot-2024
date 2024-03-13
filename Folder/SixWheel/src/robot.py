@@ -80,7 +80,7 @@ class Robot(wpilib.TimedRobot):
         if self.timer.get() < 2.5:
             self.drivetrain.moveRobot(0.3, 0, 0)
         elif self.timer.get() > 2.5 and self.timer.get() < (2.5+2.5):
-            self.solenoidDump.open()
+            #self.solenoidDump.open()
             self.drivetrain.moveRobot(0.3, 180, 0)
         else:
             self.drivetrain.moveRobot(0, 0, 0)
