@@ -10,11 +10,9 @@ import wpilib.drive
 # our code imports
 import drivetrain
 import pneumatics
-import autonomous
 import winch
 import ports
 from vision import cameraLaunch
-import ports
 
 
 class Robot(wpilib.TimedRobot):
@@ -83,8 +81,8 @@ class Robot(wpilib.TimedRobot):
         # self.leftRear.setInverted(True) I would keep this commented out unless it drives in the wrong direction then you can revise.
 
         self.stick = wpilib.Joystick(ports.JoystickPorts.JOY)
-
         self.timer = wpilib.Timer()
+
 
     def teleopInit(self) -> None:
         self.timer.reset()
@@ -92,6 +90,13 @@ class Robot(wpilib.TimedRobot):
         
     def teleopPeriodic(self):
         """This function is called periodically during operator control."""
+        
+        self.FRvel = self.rightFront.get() * 80 * 2.5 * 3.14159 / 144
+        self.FLvel = self.leftFront.get() * 80 * 2.5 * 3.14159 / 144
+        self.LRvel = self.leftRear.get() * 80 * 2.5 * 3.14159 / 144
+        self.RRvel = self.rightRear.get() * 80 * 2.5 * 3.14159 / 144
+        print(f"FR: {self.FRvel}, FL: {self.FLvel}, LR: {self.LRvel}, RR: {self.RRvel}")
+
 
         # Toggle pistons on button 3
         wpilib.SmartDashboard.putNumber('Gyro Angle', self.gyro.getAngle())
@@ -168,6 +173,11 @@ class Robot(wpilib.TimedRobot):
     # autonomous.autonomousInit()
 
     def autonomousPeriodic(self):
+        self.FRvel = self.rightFront.get() * 80 * 2.5 * 3.14159 / 144
+        self.FLvel = self.leftFront.get() * 80 * 2.5 * 3.14159 / 144
+        self.LRvel = self.leftRear.get() * 80 * 2.5 * 3.14159 / 144
+        self.RRvel = self.rightRear.get() * 80 * 2.5 * 3.14159 / 144
+        print(f"FR: {self.FRvel}, FL: {self.FLvel}, LR: {self.LRvel}, RR: {self.RRvel}")
         """This function is called periodically during autonomous."""
         if (self.timer.get() < 3.75):
             self.leftFront.set(-1) #-1, 1, 1, -1 is FORWARD!!!!!!!!!!!!!!!!!!!! Port 1
@@ -178,27 +188,17 @@ class Robot(wpilib.TimedRobot):
             #self.solenoidClamp.close()
             #self.solenoidExtend.open()
             #wpilib.SmartDashboard.putNumber('Gyro Angle', self.gyro.getAngle())
+        elif self.timer.get() > 3.75 and self.timer.get() < 10:
+            self.leftFront.set(-0.25)
+            self.leftRear.set(0)
+            self.rightFront.set(-0.25)
+            self.rightRear.set(0)  
         else:
             self.drivetrain.moveRobot(0, 0, 0)
             self.leftFront.set(0)
             self.leftRear.set(0)
             self.rightFront.set(0)
-            self.rightRear.set(0)             
-'''            while (self.gyro.getAngle() < -5): #strafe  #THIS GOES ON LINE 107 NORMALLY; NOT USING PNEUMATICS, SO COMMENTED OUT
-                self.leftFront.set(-0.3)
-                self.leftRear.set(-0.3)
-                self.rightFront.set(-0.3)
-                self.rightRear.set(-0.3)
-                wpilib.SmartDashboard.putNumber('Gyro Angle', self.gyro.getAngle())
-            while (self.gyro.getAngle() > 5):
-                self.leftFront.set(0.3)
-                self.leftRear.set(0.3)
-                self.rightFront.set(0.3)
-                self.rightRear.set(0.3)
-                wpilib.SmartDashboard.putNumber('Gyro Angle', self.gyro.getAngle())
-'''
-    
-
+            self.rightRear.set(0)   
 
 if __name__ == "__main__":
     wpilib.run(Robot)
