@@ -20,10 +20,11 @@ class DeadzoneMode(Enum):
 
 class DriveTrain:
     deadzone: float = 0
-    deadzone_twist: float = 0
+    deadzone_twist: float = 0.1
     deadzone_mode: DeadzoneMode = DeadzoneMode.CUTOFF
     speedMultiplier: float = 1
     twistMultiplier: float = 1
+    magnitudeDeadzone: float = 0.1
     
 
     def __init__(self, leftFront: wpilib.interfaces.MotorController, leftRear: wpilib.interfaces.MotorController, rightFront: wpilib.interfaces.MotorController, rightRear: wpilib.interfaces.MotorController) -> None:
@@ -45,7 +46,7 @@ class DriveTrain:
         mag = Joystick.getMagnitude()
         angle = Joystick.getDirectionDegrees()
         rotate = Joystick.getTwist()
-        if mag < self.deadzone:  # implement based on self.deadzone_mode
+        if mag < self.magnitudeDeadzone:  # implement based on self.deadzone_mode
             mag = 0
         if abs(rotate) < self.deadzone_twist:  # absolute value b/c rotate goes from -1 to 1
             rotate = 0
@@ -146,9 +147,14 @@ class MecanumDrive(DriveTrain):
             #self.realY = speed 
             #self.realX = direction 
             #self.realZ = twist
+        magnitude = self.stick.getMagnitude()
+        twist = -self.stick.getZ()
 
-
+        if magnitude < DriveTrain.magnitudeDeadzone:
+            magnitude = 0
+        if twist < -DriveTrain.deadzone_twist:
+            twist = 0
         # self.MecanumDrive.driveCartesian(-self.realX, -self.realY, -self.realZ)
-        self.MecanumDrive.drivePolar(self.stick.getMagnitude(),wpimath.geometry.Rotation2d.fromDegrees(self.stick.getDirectionDegrees()+90),-self.stick.getZ())
+        self.MecanumDrive.drivePolar(magnitude,wpimath.geometry.Rotation2d.fromDegrees(self.stick.getDirectionDegrees()+90),-self.stick.getZ())
         #self.MecanumDrive.driveCartesian(speed, direction, twist)
         #self.MecaumDrive.driveCartesian(speed,direction,twist)     
