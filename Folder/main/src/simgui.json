@@ -47,11 +47,17 @@
     },
     "windows": {
       "/SmartDashboard/Field": {
+        "Robot": {
+          "length": 0.8127999901771545,
+          "style": "Box/Image",
+          "width": 0.7111999988555908
+        },
         "bottom": 1476,
         "height": 8.210550308227539,
         "left": 150,
         "right": 2961,
         "top": 79,
+        "units": "inches",
         "width": 16.541748046875,
         "window": {
           "visible": true

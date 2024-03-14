@@ -20,11 +20,11 @@ class DeadzoneMode(Enum):
 
 class DriveTrain:
     deadzone: float = 0
-    deadzone_twist: float = 0.1
+    deadzone_twist: float = 0.2
     deadzone_mode: DeadzoneMode = DeadzoneMode.CUTOFF
     speedMultiplier: float = 1
     twistMultiplier: float = 1
-    magnitudeDeadzone: float = 0.1
+    magnitudeDeadzone: float = 0.2
     
 
     def __init__(self, leftFront: wpilib.interfaces.MotorController, leftRear: wpilib.interfaces.MotorController, rightFront: wpilib.interfaces.MotorController, rightRear: wpilib.interfaces.MotorController) -> None:
@@ -153,12 +153,12 @@ class MecanumDrive(DriveTrain):
 
         if magnitude < DriveTrain.magnitudeDeadzone:
             magnitude = 0
-        if twist < -DriveTrain.deadzone_twist:
+        if abs(twist) < DriveTrain.deadzone_twist:
             twist = 0
         
         direction = self.stick.getDirectionDegrees()+90
         direction += -self.gyro.getAngle()
         # self.MecanumDrive.driveCartesian(-self.realX, -self.realY, -self.realZ)
-        self.MecanumDrive.drivePolar(magnitude,wpimath.geometry.Rotation2d.fromDegrees(direction),-self.stick.getZ())
+        self.MecanumDrive.drivePolar(magnitude,wpimath.geometry.Rotation2d.fromDegrees(direction), twist)
         #self.MecanumDrive.driveCartesian(speed, direction, twist)
         #self.MecaumDrive.driveCartesian(speed,direction,twist)     
