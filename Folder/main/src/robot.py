@@ -179,7 +179,7 @@ class Robot(wpilib.TimedRobot):
         self.RRvel = self.rightRear.get() * 80 * 2.5 * 3.14159 / 144
         print(f"FR: {self.FRvel}, FL: {self.FLvel}, LR: {self.LRvel}, RR: {self.RRvel}")
         """This function is called periodically during autonomous."""
-        if (self.timer.get() < 3.75):
+        if (self.timer.get() < 2):
             self.leftFront.set(-1) #-1, 1, 1, -1 is FORWARD!!!!!!!!!!!!!!!!!!!! Port 1
             self.leftRear.set(1) #1, -1, -1, 1 is BACKWARD!!!!!!!!!!!!!!!!!!!!! Port 0
             self.rightFront.set(1)  #0, -1, 0, -1 OR 0, 1, 0, 1 is LEFT!!!!!!!! Port 3 
