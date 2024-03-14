@@ -68,7 +68,7 @@ class Robot(wpilib.TimedRobot):
         # self.drive = wpilib.drive.MecanumDrive(self.leftFront, self.leftRear, self.rightFront, self.rightRear)
 
         self.drivetrain = drivetrain.MecanumDrive(
-            self.leftFront, self.leftRear, self.rightFront, self.rightRear)
+            self.leftFront, self.leftRear, self.rightFront, self.rightRear,self.gyro)
         self.drivetrain.rightInverted(False)
         self.drivetrain.leftInverted(True)
         self.drivetrain.setDeadzone(0.5, 0.5)
@@ -179,7 +179,7 @@ class Robot(wpilib.TimedRobot):
             #self.solenoidExtend.open()
             #wpilib.SmartDashboard.putNumber('Gyro Angle', self.gyro.getAngle())
         else:
-            self.drivetrain.moveRobot(0, 0, 0)
+            self.drivetrain.moveRobot(0,0,0)
             self.leftFront.set(0)
             self.leftRear.set(0)
             self.rightFront.set(0)

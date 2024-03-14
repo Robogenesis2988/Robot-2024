@@ -114,34 +114,35 @@ class DriveTrain:
 
 
 class MecanumDrive(DriveTrain):
-    def __init__(self, leftFront: wpilib.interfaces.MotorController, leftRear: wpilib.interfaces.MotorController, rightFront: wpilib.interfaces.MotorController, rightRear: wpilib.interfaces.MotorController) -> None:
+    def __init__(self, leftFront: wpilib.interfaces.MotorController, leftRear: wpilib.interfaces.MotorController, rightFront: wpilib.interfaces.MotorController, rightRear: wpilib.interfaces.MotorController,gyro: wpilib.ADXRS450_Gyro) -> None:
         # run the parent's __init__ function
         super().__init__(leftFront, leftRear, rightFront, rightRear)
         self.MecanumDrive = wpilib.drive.MecanumDrive(
-            self.leftRear, self.leftFront, self.rightRear, self.rightFront,)  # create a mecanum drive object
+            self.leftRear, self.leftFront, self.rightRear, self.rightFront)  # create a mecanum drive object
+        self.gyro = gyro
 
     def moveRobot(self, speed: float, direction: float, twist: float):
-        self.stickInputY = self.stick.getY()
-        self.stickInputX = self.stick.getX()
-        self.stickInputZ = self.stick.getZ()
+        # self.stickInputY = self.stick.getY()
+        # self.stickInputX = self.stick.getX()
+        # self.stickInputZ = self.stick.getZ()
         
 
-        if (abs(self.stickInputY) < 0.2):
-            self.realY = 0
-        else:
-            self.realY = self.stickInputY
-        if (abs(self.stickInputX) < 0.2):
-            self.realX = 0
-        else:
-            self.realX = self.stickInputX
-        if (abs(self.stickInputZ) < 0.2):
-            self.realZ = 0
-        else: 
-            self.realZ = self.stickInputZ
+        # if (abs(self.stickInputY) < 0.2):
+        #     self.realY = 0
+        # else:
+        #     self.realY = self.stickInputY
+        # if (abs(self.stickInputX) < 0.2):
+        #     self.realX = 0
+        # else:
+        #     self.realX = self.stickInputX
+        # if (abs(self.stickInputZ) < 0.2):
+        #     self.realZ = 0
+        # else: 
+        #     self.realZ = self.stickInputZ
         
-        self.realY = (self.realY * self.speedMultiplier)
-        self.realX = (self.realX * self.speedMultiplier)
-        self.realZ = (self.realZ * self.speedMultiplier)
+        # self.realY = (self.realY * self.speedMultiplier)
+        # self.realX = (self.realX * self.speedMultiplier)
+        # self.realZ = (self.realZ * self.speedMultiplier)
 
         #if self.timer.get() < 15:
             #self.realY = speed 
@@ -154,7 +155,10 @@ class MecanumDrive(DriveTrain):
             magnitude = 0
         if twist < -DriveTrain.deadzone_twist:
             twist = 0
+        
+        direction = self.stick.getDirectionDegrees()+90
+        direction += -self.gyro.getAngle()
         # self.MecanumDrive.driveCartesian(-self.realX, -self.realY, -self.realZ)
-        self.MecanumDrive.drivePolar(magnitude,wpimath.geometry.Rotation2d.fromDegrees(self.stick.getDirectionDegrees()+90),-self.stick.getZ())
+        self.MecanumDrive.drivePolar(magnitude,wpimath.geometry.Rotation2d.fromDegrees(direction),-self.stick.getZ())
         #self.MecanumDrive.driveCartesian(speed, direction, twist)
         #self.MecaumDrive.driveCartesian(speed,direction,twist)     
