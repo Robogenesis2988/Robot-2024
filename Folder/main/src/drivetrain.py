@@ -150,15 +150,25 @@ class MecanumDrive(DriveTrain):
             #self.realZ = twist
         magnitude = self.stick.getMagnitude()
         twist = -self.stick.getZ()
+        self.stickInputY = self.stick.getY()
+        self.stickInputX = self.stick.getX()
+        self.stickInputZ = self.stick.getZ()
 
         if magnitude < DriveTrain.magnitudeDeadzone:
             magnitude = 0
         if abs(twist) < DriveTrain.deadzone_twist:
             twist = 0
-        
+        if self.stick.getRawButton(2) > 0:
+            magnitude *= 0.25
+        else:
+            magnitude = magnitude
         direction = self.stick.getDirectionDegrees()+90
         direction += -self.gyro.getAngle()
         # self.MecanumDrive.driveCartesian(-self.realX, -self.realY, -self.realZ)
-        self.MecanumDrive.drivePolar(magnitude,wpimath.geometry.Rotation2d.fromDegrees(direction), twist)
+        if self.stick.getTrigger() > 0:
+            self.MecanumDrive.driveCartesian(-self.stickInputX, -self.stickInputY, -self.stickInputZ)
+        else:
+            self.MecanumDrive.drivePolar(magnitude,wpimath.geometry.Rotation2d.fromDegrees(direction), twist)
+
         #self.MecanumDrive.driveCartesian(speed, direction, twist)
         #self.MecaumDrive.driveCartesian(speed,direction,twist)     
