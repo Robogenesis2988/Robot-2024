@@ -166,9 +166,9 @@ class MecanumDrive(DriveTrain):
         direction += -self.gyro.getAngle()
         # self.MecanumDrive.driveCartesian(-self.realX, -self.realY, -self.realZ)
         if self.stick.getTrigger() > 0:
-            self.MecanumDrive.driveCartesian(-self.stickInputX, -self.stickInputY, -self.stickInputZ)
-        else:
             self.MecanumDrive.drivePolar(magnitude,wpimath.geometry.Rotation2d.fromDegrees(direction), twist)
+        else:
+            self.MecanumDrive.driveCartesian(-self.stickInputX, -self.stickInputY, -self.stickInputZ)
 
         #self.MecanumDrive.driveCartesian(speed, direction, twist)
         #self.MecaumDrive.driveCartesian(speed,direction,twist)     

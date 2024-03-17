@@ -111,15 +111,11 @@ class Robot(wpilib.TimedRobot):
                 self.leftFront.set(.5)
 
         if self.stick.getRawButton(6) > 0: #winch go up 
-            self.rightWinchMotor.set(0.5)
-            self.leftWinchMotor.set(0.5)
-            
-
+            self.rightWinchMotor.set(1)
+            self.leftWinchMotor.set(1)
         elif self.stick.getRawButton(4) > 0: #winch go down
-            self.rightWinchMotor.set(-0.5)
-            self.leftWinchMotor.set(-0.5)
-            
-
+            self.rightWinchMotor.set(-1)
+            self.leftWinchMotor.set(-1)
         else: #winch stop
             self.rightWinchMotor.set(0)
             self.leftWinchMotor.set(0)
@@ -169,15 +165,20 @@ class Robot(wpilib.TimedRobot):
 
     def autonomousPeriodic(self):
         """This function is called periodically during autonomous."""
-        if (self.timer.get() < 3.75):
-            self.leftFront.set(-1) #-1, 1, 1, -1 is FORWARD!!!!!!!!!!!!!!!!!!!! Port 1
-            self.leftRear.set(1) #1, -1, -1, 1 is BACKWARD!!!!!!!!!!!!!!!!!!!!! Port 0
-            self.rightFront.set(1)  #0, -1, 0, -1 OR 0, 1, 0, 1 is LEFT!!!!!!!! Port 3 
-            self.rightRear.set(-1)  #-1, 0, -1, 0 OR 1, 0, 1, 0 is RIGHT!!!!!!! Port 2
+        if (self.timer.get() < 2.25):
+            self.leftFront.set(-.5) #-1, 1, 1, -1 is FORWARD!!!!!!!!!!!!!!!!!!!! Port 1
+            self.leftRear.set(.5) #1, -1, -1, 1 is BACKWARD!!!!!!!!!!!!!!!!!!!!! Port 0
+            self.rightFront.set(.5)  #0, -1, 0, -1 OR 0, 1, 0, 1 is LEFT!!!!!!!! Port 3 
+            self.rightRear.set(-.5)  #-1, 0, -1, 0 OR 1, 0, 1, 0 is RIGHT!!!!!!! Port 2
             #self.drivetrain.(self.realY, -self.realZ, -self.realX)
             #self.solenoidClamp.close()
             #self.solenoidExtend.open()
             #wpilib.SmartDashboard.putNumber('Gyro Angle', self.gyro.getAngle())
+        elif self.timer.get() > 3 and self.timer.get() < 10:
+            self.leftFront.set(-0.25) #-1, 1, 1, -1 is FORWARD!!!!!!!!!!!!!!!!!!!! Port 1
+            self.leftRear.set(-0.25) #1, -1, -1, 1 is BACKWARD!!!!!!!!!!!!!!!!!!!!! Port 0
+            self.rightFront.set(-0.25)  #0, -1, 0, -1 OR 0, 1, 0, 1 is LEFT!!!!!!!! Port 3 
+            self.rightRear.set(-0.25)  #-1, 0, -1, 0 OR 1, 0, 1, 0 is RIGHT!!!!!!! Port 2
         else:
             self.drivetrain.moveRobot(0,0,0)
             self.leftFront.set(0)
